@@ -3,7 +3,6 @@ import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuIt
 
 const navigation = [
   { name: 'Home', to: { name: 'Home' } },
-  { name: 'Travels', to: { name: 'Travels' } },
   { name: 'Tours', to: { name: 'Tours' } },
   { name: 'Login', to: { name: 'Login' } },
   { name: 'Register', to: { name: 'Register' } },
