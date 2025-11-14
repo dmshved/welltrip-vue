@@ -1,5 +1,34 @@
 <script setup>
 import GuestLayout from '@/components/GuestLayout.vue'
+import { ref } from 'vue'
+import axiosClient from '@/axios.js'
+import router from "../router";
+
+const data = ref({
+  name: '',
+  email: '',
+  password: '',
+  password_confirmation: '',
+})
+
+const errors = ref({
+  name: [],
+  email: [],
+  password: [],
+})
+
+function submit() {
+  axiosClient.get('/sanctum/csrf-cookie').then(response => {
+    axiosClient.post('/register', data.value)
+      .then(response => {
+        router.push({name: 'Home'})
+      })
+      .catch(error => {
+        console.log(error.response.data)
+        errors.value = error.response.data.errors;
+      })
+  });
+}
 </script>
 
 <template>
@@ -8,18 +37,23 @@ import GuestLayout from '@/components/GuestLayout.vue'
     <h2 class="mt-1 text-center text-2xl/9 font-bold tracking-tight text-gray-900">Register</h2>
 
     <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-      <form class="space-y-3" action="#" method="POST">
+      <form @submit.prevent="submit" class="space-y-3">
         <!-- Name -->
         <div>
-          <label for="email" class="block text-sm/6 font-medium text-gray-900">Name</label>
+          <label for="name" class="block text-sm/6 font-medium text-gray-900">Name</label>
           <div class="mt-2">
             <input
+              v-model="data.name"
               type="text"
               name="name"
               id="name"
               required=""
               class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" />
           </div>
+
+          <p class="text-sm mt-1 text-red-600">
+            {{ errors.name ? errors.name[0] : '' }}
+          </p>
         </div>
 
         <!-- Email -->
@@ -27,12 +61,17 @@ import GuestLayout from '@/components/GuestLayout.vue'
           <label for="email" class="block text-sm/6 font-medium text-gray-900">Email</label>
           <div class="mt-2">
             <input
+              v-model="data.email"
               type="email"
               name="email"
               id="email"
               required=""
               class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" />
           </div>
+
+          <p class="text-sm mt-1 text-red-600">
+            {{ errors.email ? errors.email[0] : '' }}
+          </p>
         </div>
 
         <!-- Password -->
@@ -43,12 +82,17 @@ import GuestLayout from '@/components/GuestLayout.vue'
 
           <div class="mt-2">
             <input
+              v-model="data.password"
               type="password"
               name="password"
               id="password"
               required=""
               class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" />
           </div>
+
+          <p class="text-sm mt-1 text-red-600">
+            {{ errors.password ? errors.password[0] : '' }}
+          </p>
         </div>
 
         <!-- Password Confirmation -->
@@ -59,12 +103,17 @@ import GuestLayout from '@/components/GuestLayout.vue'
 
           <div class="mt-2">
             <input
+              v-model="data.password_confirmation"
               type="password"
               name="password_confirmation"
               id="password_confirmation"
               required=""
               class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" />
           </div>
+
+          <p class="text-sm mt-1 text-red-600">
+            {{ errors.password ? errors.password[0] : '' }}
+          </p>
         </div>
 
         <!-- Submit -->
