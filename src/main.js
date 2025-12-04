@@ -1,18 +1,20 @@
+// NOTE FOR MYSELF
+// calling plugin setUser without setting the pinia instance as a parameter doesn't work
+
 import { createApp } from 'vue';
 import { createPinia } from 'pinia';
-import useAuth from '@/composables/useAuth.js';
-
 import App from './App.vue';
 import router from './router';
 import './style.css';
+import setUser from '@/plugins/set-user.js'
 
 const app = createApp(App)
+const pinia = createPinia()
 
-app.use(createPinia())
+app.use(pinia)
 app.use(router)
 
-const { attempt } = useAuth();
+// set the pinia instance
+setUser(pinia)
 
-attempt().finally(() => {
-  app.mount('#app')
-})
+app.mount('#app')

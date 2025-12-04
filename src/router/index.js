@@ -1,29 +1,52 @@
-import { createRouter, createWebHistory } from 'vue-router';
-import DefaultLayout from '@/layouts/DefaultLayout.vue';
-import LoginView from '@/views/auth/LoginView.vue';
-import RegisterView from '@/views/auth/RegisterView.vue';
-import NotFoundView from '@/views/NotFoundView.vue';
-import ToursView from '@/views/ToursView.vue';
-import DashboardView from '@/views/DashboardView.vue';
-import { useAuthStore } from '@/store/authStore.js'
+import { createRouter, createWebHistory } from 'vue-router'
+import DefaultLayout from '@/layouts/DefaultLayout.vue'
+import LoginView from '@/views/auth/LoginView.vue'
+import RegisterView from '@/views/auth/RegisterView.vue'
+import NotFoundView from '@/views/NotFoundView.vue'
+import ToursView from '@/views/ToursView.vue'
+import DashboardView from '@/views/DashboardView.vue'
+import { useUserStore } from '@/store/user.js'
 
 const routes = [
-  // auth routes
-  { path: '/login', name: 'Login', component: LoginView, meta: { requiresGuest: true } },
-  { path: '/register', name: 'Register', component: RegisterView, meta: { requiresGuest: true } },
-
-  // routes with DefaultLayout
+  {
+    name: 'Login',
+    path: '/login',
+    component: LoginView,
+    beforeEnter: (to, from, next) => {
+      const user = useUserStore()
+      user.isAuthorized.value ? next('/') : next()
+    },
+  },
+  {
+    name: 'Register',
+    path: '/register',
+    component: RegisterView,
+    beforeEnter: (to, from, next) => {
+      const user = useUserStore()
+      user.isAuthorized.value ? next('/') : next()
+    },
+  },
   {
     path: '/',
     component: DefaultLayout,
     children: [
-      { path: '/', name: 'Dashboard', component: DashboardView },
-      { path: 'tours', name: 'Tours', component: ToursView },
+      {
+        name: 'Dashboard',
+        path: '/',
+        component: DashboardView
+      },
+      {
+        name: 'Tours',
+        path: 'tours',
+        component: ToursView
+      },
     ]
   },
-
-  // catch-all route for 404
-  { path: '/:pathMatch(.*)*', name: 'NotFound', component: NotFoundView, },
+  {
+    path: '/:pathMatch(.*)*',
+    name: 'NotFound',
+    component: NotFoundView,
+  },
 ];
 
 const router = createRouter({
@@ -31,17 +54,11 @@ const router = createRouter({
   routes
 })
 
-// navigation guards
-router.beforeEach((to, from, next) => {
-  const authStore = useAuthStore()
-
-  if (to.meta.requiresAuth && !authStore.isLoggedIn) {
-    next('/login')
-  } else if (to.meta.requiresGuest && authStore.isLoggedIn) {
-      next('/')
+export async function routerPush(name, params) {
+  if (params === undefined) {
+    return await router.push({ name })
   } else {
-    next()
+    return await router.push({ name, params })
   }
-})
-
+}
 export default router

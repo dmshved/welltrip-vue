@@ -1,15 +1,16 @@
 <script setup>
-import { useAuthStore } from '@/store/authStore.js';
+import { useUserStore } from '@/store/user.js'
+import { storeToRefs } from 'pinia'
 
-const auth = useAuthStore();
+const { user, isAuthorized } = storeToRefs(useUserStore())
 </script>
 
 <template>
   <h1>Dashboard</h1>
 
-  <div v-if="auth.isLoggedIn">
+  <div v-if="isAuthorized">
     <p>
-      Hello my dear {{ auth.user.name }}
+      Hello my dear {{ user.name }}
     </p>
   </div>
 </template>

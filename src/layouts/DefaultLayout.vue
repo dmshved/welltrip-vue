@@ -1,8 +1,19 @@
 <script setup>
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems} from '@headlessui/vue';
-import useAuth from '@/composables/useAuth.js';
+import { logout } from '@/api/auth.js'
+import { useUserStore } from '@/store/user.js'
+import { routerPush } from '@/router/index.js'
 
-const { logout, errorMessage } = useAuth();
+const { updateUser } = useUserStore()
+
+async function onLogout() {
+  try {
+    await logout()
+  } finally {
+    updateUser(null)
+    await routerPush('Dashboard')
+  }
+}
 
 const navigation = [
   { name: 'Dashboard', to: { name: 'Dashboard' } },
@@ -10,15 +21,9 @@ const navigation = [
   { name: 'Login', to: { name: 'Login' } },
   { name: 'Register', to: { name: 'Register' } },
 ]
-
-// TODO: understand the good practise how can I hide the UI parts using pinia isLoggedIn
 </script>
 
 <template>
-  <div v-if="errorMessage" class="mt-4 py-2 px-3 rounded text-white bg-red-400">
-    {{errorMessage}}
-  </div>
-
   <div class="min-h-full">
     <Disclosure as="nav" class="bg-gray-800" v-slot="{ close }">
       <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -92,7 +97,7 @@ const navigation = [
                   >
                     <MenuItem>
                       <button
-                        @click="logout"
+                        @click="onLogout"
                         class="flex items-center px-4 py-2 text-sm text-gray-700"
                       >
                         <svg
@@ -174,7 +179,7 @@ const navigation = [
 
             <!-- Logout -->
             <button
-              @click="logout; close()"
+              @click="onLogout; close()"
               class="text-gray-300 hover:text-white block rounded-md px-3 py-2 text-base font-medium"
             >
               Logout

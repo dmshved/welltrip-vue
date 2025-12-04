@@ -1,7 +1,17 @@
 import axios from 'axios'
-import { useAuthStore } from '@/store/authStore.js';
 
-const axiosInstance = axios.create({
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL
+const API_VERSION = import.meta.env.VITE_API_VERSION
+
+// axios instance for api calls
+export const axiosInstance = axios.create({
+  baseURL: `${API_BASE_URL}/api/${API_VERSION}`,
+  withCredentials: true,
+  withXSRFToken: true,
+})
+
+// axios instance for /sanctum/csrf-cookie
+export const axiosCsrfInstance = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL,
   withCredentials: true,
   withXSRFToken: true,
@@ -10,13 +20,12 @@ const axiosInstance = axios.create({
 axiosInstance.interceptors.response.use(
   (response) => response,
   (error) => {
+    // handle unauthorized error
     if (error.response?.status === 401) {
-      const authStore = useAuthStore()
-      authStore.setLoggedIn(false)
-      authStore.setUser(null)
+      console.error('Unauthorized, logging out...')
     }
-    // show error message
+
+    // propagate error
     return Promise.reject(error)
   }
 )
-export default axiosInstance

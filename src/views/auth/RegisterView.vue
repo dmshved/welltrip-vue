@@ -1,9 +1,9 @@
 <script setup>
-import GuestLayout from '@/layouts/GuestLayout.vue';
-import useAuth from '@/composables/useAuth.js';
-import { reactive } from 'vue';
-
-const { register, errorMessage } = useAuth();
+import GuestLayout from '@/layouts/GuestLayout.vue'
+import { reactive, ref } from 'vue'
+import { register } from '@/api/auth.js'
+import { routerPush } from '@/router/index.js'
+import { useUserStore } from '@/store/user.js'
 
 const form = reactive({
   name: '',
@@ -11,15 +11,37 @@ const form = reactive({
   password: '',
   password_confirmation: '',
 })
+
+const { updateUser } = useUserStore()
+
+const errorMessage = ref()
+
+async function onRegister(form) {
+  errorMessage.value = {}
+
+  try {
+    const userData = await register(form)
+    updateUser(userData)
+    await routerPush('Dashboard')
+  }
+  catch (error) {
+    errorMessage.value = error.response?.data?.message
+  }
+}
 </script>
 
 <template>
   <GuestLayout>
     <!-- Heading -->
+
     <h2 class="mt-1 text-center text-2xl/9 font-bold tracking-tight text-gray-900">Register</h2>
 
+    <div v-if="errorMessage" class="mt-4 py-2 px-3 rounded text-white bg-red-400">
+      {{ errorMessage }}
+    </div>
+
     <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-      <form @submit.prevent="register(form)" class="space-y-3">
+      <form @submit.prevent="onRegister(form)" class="space-y-3">
         <!-- Name -->
         <div>
           <label for="name" class="block text-sm/6 font-medium text-gray-900">Name</label>
@@ -30,7 +52,8 @@ const form = reactive({
               name="name"
               id="name"
               required=""
-              class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" />
+              class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+            />
           </div>
 
           <p class="text-sm mt-1 text-red-600">
@@ -48,7 +71,8 @@ const form = reactive({
               name="email"
               id="email"
               required=""
-              class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" />
+              class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+            />
           </div>
 
           <p class="text-sm mt-1 text-red-600">
@@ -69,7 +93,8 @@ const form = reactive({
               name="password"
               id="password"
               required=""
-              class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" />
+              class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+            />
           </div>
 
           <p class="text-sm mt-1 text-red-600">
@@ -80,7 +105,9 @@ const form = reactive({
         <!-- Password Confirmation -->
         <div>
           <div class="flex items-center justify-between">
-            <label for="password_confirmation" class="block text-sm/6 font-medium text-gray-900">Password Confirmation</label>
+            <label for="password_confirmation" class="block text-sm/6 font-medium text-gray-900"
+              >Password Confirmation</label
+            >
           </div>
 
           <div class="mt-2">
@@ -90,7 +117,8 @@ const form = reactive({
               name="password_confirmation"
               id="password_confirmation"
               required=""
-              class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" />
+              class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+            />
           </div>
 
           <p class="text-sm mt-1 text-red-600">
@@ -100,17 +128,24 @@ const form = reactive({
 
         <!-- Submit -->
         <div>
-          <button type="submit" class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-          >Register</button>
+          <button
+            type="submit"
+            class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+          >
+            Register
+          </button>
         </div>
       </form>
 
       <p class="mt-10 text-center text-sm/6 text-gray-500">
         Already have an account?
         {{ ' ' }}
-        <RouterLink :to="{ name: 'Login'}" class="font-semibold text-indigo-600 hover:text-indigo-500">Login</RouterLink>
+        <RouterLink
+          :to="{ name: 'Login' }"
+          class="font-semibold text-indigo-600 hover:text-indigo-500"
+          >Login</RouterLink
+        >
       </p>
     </div>
   </GuestLayout>
 </template>
-
