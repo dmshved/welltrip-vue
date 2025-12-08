@@ -14,7 +14,7 @@ const routes = [
     component: LoginView,
     beforeEnter: (to, from, next) => {
       const user = useUserStore()
-      user.isAuthorized.value ? next('/') : next()
+      user.isAuthorized ? next('/') : next()
     },
   },
   {
@@ -23,7 +23,7 @@ const routes = [
     component: RegisterView,
     beforeEnter: (to, from, next) => {
       const user = useUserStore()
-      user.isAuthorized.value ? next('/') : next()
+      user.isAuthorized ? next('/') : next()
     },
   },
   {

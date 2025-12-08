@@ -5,13 +5,21 @@ import router from './router';
 import './style.css';
 import setUser from '@/plugins/set-user.js'
 
-const app = createApp(App)
-const pinia = createPinia()
+async function bootstrap() {
+  const app = createApp(App)
+  const pinia = createPinia()
 
-app.use(pinia)
-app.use(router)
+  app.use(pinia)
 
-// set the pinia instance
-setUser(pinia)
+  try{
+    //  Wait until user is loaded BEFORE router runs guards
+    await setUser(pinia)
+  } catch (error){
+    console.log('Unauthorized')
+  }
 
-app.mount('#app')
+  app.use(router)
+  app.mount('#app')
+}
+
+bootstrap()
