@@ -26,13 +26,13 @@ const routes = [
     children: [
       {
         name: 'Dashboard',
-        path: '/',
+        path: '',
         component: DashboardView,
         meta: { auth: false },
       },
       {
         name: 'Tours',
-        path: '/tours',
+        path: 'tours',
         component: ToursView,
         meta: { auth: true },
       },

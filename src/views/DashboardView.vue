@@ -13,4 +13,70 @@ const { user, isAuthorized } = storeToRefs(useUserStore())
       Hello my dear {{ user.name }}
     </p>
   </div>
+
+  <br>
+
+  <div>
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit. A ab accusantium animi cum dolorem minima nisi odio recusandae rem repellat, repudiandae, similique temporibus, vel. Expedita nam non quam ut voluptatibus!
+  </div>
+
+  <br>
+
+  <div>
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit. A ab accusantium animi cum dolorem minima nisi odio recusandae rem repellat, repudiandae, similique temporibus, vel. Expedita nam non quam ut voluptatibus!
+  </div>
+
+  <br>
+
+  <div>
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit. A ab accusantium animi cum dolorem minima nisi odio recusandae rem repellat, repudiandae, similique temporibus, vel. Expedita nam non quam ut voluptatibus!
+  </div>
+
+  <br>
+
+  <div>
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit. A ab accusantium animi cum dolorem minima nisi odio recusandae rem repellat, repudiandae, similique temporibus, vel. Expedita nam non quam ut voluptatibus!
+  </div>
+
+  <br>
+
+  <div>
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit. A ab accusantium animi cum dolorem minima nisi odio recusandae rem repellat, repudiandae, similique temporibus, vel. Expedita nam non quam ut voluptatibus!
+  </div>
+
+  <br>
+
+  <div>
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit. A ab accusantium animi cum dolorem minima nisi odio recusandae rem repellat, repudiandae, similique temporibus, vel. Expedita nam non quam ut voluptatibus!
+  </div>
+
+  <br>
+
+  <div>
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit. A ab accusantium animi cum dolorem minima nisi odio recusandae rem repellat, repudiandae, similique temporibus, vel. Expedita nam non quam ut voluptatibus!
+  </div>
+
+  <br>
+
+  <div>
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit. A ab accusantium animi cum dolorem minima nisi odio recusandae rem repellat, repudiandae, similique temporibus, vel. Expedita nam non quam ut voluptatibus!
+  </div>
+
+  <br>
+
+  <div>
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit. A ab accusantium animi cum dolorem minima nisi odio recusandae rem repellat, repudiandae, similique temporibus, vel. Expedita nam non quam ut voluptatibus!
+  </div>
+
+  <br>
+
+  <div>
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit. A ab accusantium animi cum dolorem minima nisi odio recusandae rem repellat, repudiandae, similique temporibus, vel. Expedita nam non quam ut voluptatibus!
+  </div>
+
+  <br>
+
+  <div>
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit. A ab accusantium animi cum dolorem minima nisi odio recusandae rem repellat, repudiandae, similique temporibus, vel. Expedita nam non quam ut voluptatibus!
+  </div>
 </template>
