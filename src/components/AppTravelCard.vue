@@ -1,0 +1,49 @@
+<script setup>
+import { MoonIcon, SunIcon } from '@heroicons/vue/24/outline/index.js'
+
+defineProps({
+  createdAt: String,
+  numberOfDays: Number,
+  numberOfNights: Number,
+  title: String,
+  description: String,
+})
+</script>
+
+<template>
+  <article class="flex max-w-xl flex-col items-start justify-between">
+    <div class="flex items-center gap-x-4 text-xs">
+      <!-- createdAt -->
+      <time datetime="2020-03-16" class="text-gray-500">
+        Added {{ createdAt }}
+      </time>
+
+      <!-- numberOfDays -->
+      <div title="Number Of Days" class="flex items-center gap-1 z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-gray-600 hover:bg-yellow-100 hover:text-gray-500 transition-colors duration-300">
+        <SunIcon class="size-5"/>
+        <p class="font-bold">{{ numberOfDays }} d</p>
+      </div>
+
+      <!-- numberOfNights -->
+      <div title="Number Of Nights" class="flex items-center gap-1 z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-gray-600 hover:bg-gray-700  hover:text-gray-300 transition-colors duration-300">
+        <MoonIcon class="size-4"/>
+        <p class="font-bold">{{ numberOfNights }} n</p>
+      </div>
+    </div>
+
+    <div class="group relative grow">
+      <h3 class="mt-3 text-lg/6 font-semibold text-gray-900 group-hover:text-gray-600">
+        <!-- title -->
+        <a href="#">
+          <span class="absolute inset-0"></span>
+          {{ title }}
+        </a>
+      </h3>
+
+      <!-- description -->
+      <p class="mt-5 line-clamp-2 text-sm/6 text-gray-600">
+        {{ description}}
+      </p>
+    </div>
+  </article>
+</template>
