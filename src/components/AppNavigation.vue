@@ -3,7 +3,6 @@ import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuIt
 import AppLogo from '@/components/AppLogo.vue'
 import DesktopNavLinks from '@/components/DesktopNavLinks.vue'
 import MobileNavButton from '@/components/MobileNavButton.vue'
-
 import { provide } from 'vue'
 import { logout } from '@/api/auth.js'
 import { useUserStore } from '@/store/user.js'
