@@ -2,6 +2,22 @@
 import UserGreeting from '@/components/UserGreeting.vue'
 import AppTravelCard from '@/components/AppTravelCard.vue'
 import AppCardContainer from '@/components/AppCardContainer.vue'
+import { getTravelsFromApi } from '@/api/travel.js'
+import { onMounted, ref } from 'vue'
+
+const travels = ref([])
+const error = ref([])
+
+const loadTravels = async () => {
+  error.value = null
+
+  try {
+    travels.value = await getTravelsFromApi()
+  } catch (err) {
+    error.value = err.message || "Travels data does't exist"
+  }
+}
+onMounted(loadTravels)
 </script>
 
 <template>
@@ -13,25 +29,12 @@ import AppCardContainer from '@/components/AppCardContainer.vue'
       <!-- Cards -->
       <AppCardContainer>
         <AppTravelCard
-          createdAt="11.12.2025"
-          numberOfDays="12"
-          numberOfNights="11"
-          title="Welcome to the club buddy :D"
-          description="Well, ther is no actual description but I can tell you that I like to program everything I see on my way. Actually this desc goes really wide"
-        />
-        <AppTravelCard
-          createdAt="10.08.2025"
-          numberOfDays="5"
-          numberOfNights="4"
-          title="Really goof to have a dog"
-          description="bark bark bark bark bark bark"
-        />
-        <AppTravelCard
-          createdAt="01.12.2026"
-          numberOfDays="365"
-          numberOfNights="364"
-          title="Road to 2026"
-          description="There is a new year here!"
+          v-for="travel in travels"
+            :createdAt="travel.created_at"
+            :numberOfDays="travel.number_of_days"
+            :numberOfNights="travel.number_of_nights"
+            :title="travel.name"
+            :description="travel.description"
         />
       </AppCardContainer>
     </div>

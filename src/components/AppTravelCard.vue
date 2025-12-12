@@ -1,21 +1,31 @@
 <script setup>
 import { MoonIcon, SunIcon } from '@heroicons/vue/24/outline/index.js'
+import { useDateTime} from '@/composables/useDateTime.js'
+import { computed } from 'vue'
 
-defineProps({
+const { formatDate } = useDateTime()
+
+
+const props = defineProps({
   createdAt: String,
   numberOfDays: Number,
   numberOfNights: Number,
   title: String,
   description: String,
 })
+
+const formattedDate = computed(() => {
+  if (!props.createdAt) return ''
+  return formatDate(props.createdAt, 'DD MMMM YYYY')
+})
 </script>
 
 <template>
-  <article class="flex max-w-xl flex-col items-start justify-between">
+  <article class="flex max-w-xl flex-col items-start justify-between bg-gray-50 bg-opacity-90 p-5 rounded-lg">
     <div class="flex items-center gap-x-4 text-xs">
       <!-- createdAt -->
       <time datetime="2020-03-16" class="text-gray-500">
-        Added {{ createdAt }}
+        Added {{ formattedDate }}
       </time>
 
       <!-- numberOfDays -->
