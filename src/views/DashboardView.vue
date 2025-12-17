@@ -20,12 +20,21 @@ const {
   <div class="bg-white py-10">
     <div class="mx-auto max-w-7xl px-6 lg:px-8">
 
+
       <!-- User greeting-->
       <UserGreeting />
 
+      <!-- Pagination -->
+      <AppPagination
+        :meta="meta"
+        :links="links"
+        :loading="loading"
+        @next="next"
+        @prev="prev"
+      />
+
       <!-- Cards Container -->
       <AppCardContainer>
-
         <!-- Cards -->
         <AppTravelCard
           v-for="travel in travels"
@@ -38,14 +47,7 @@ const {
         />
       </AppCardContainer>
 
-      <!-- Pagination -->
-      <AppPagination
-        :meta="meta"
-        :links="links"
-        :loading="loading"
-        @next="next"
-        @prev="prev"
-      />
+
     </div>
   </div>
 </template>
