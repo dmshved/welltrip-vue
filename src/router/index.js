@@ -32,7 +32,7 @@ const routes = [
         meta: { auth: false },
       },
       {
-        name: 'New Travel',
+        name: 'Create Travel',
         path: 'travels/create',
         component: TravelCreate,
         meta: {

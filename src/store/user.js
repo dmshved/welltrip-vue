@@ -6,8 +6,8 @@ export const useUserStore = defineStore('user', () => {
   const user = ref(null)
 
   const isAuthorized = computed(() => !!user.value)
-  const isAdmin = computed(() => user.value.roles.includes('admin'))
-  const isEditor = computed(() => user.value.roles.includes('editor'))
+  const isAdmin = computed(() => user.value?.roles?.includes('admin'))
+  const isEditor = computed(() => user.value?.roles?.includes('editor'))
 
   async function getUser() {
     try {

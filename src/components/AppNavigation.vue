@@ -36,7 +36,7 @@ const navigation = computed(() => {
   // Admin routes
   if (isAdmin.value){
     items.push(
-      { name: 'Create Travel', to: { name: 'New Travel' } }
+      { name: 'Create Travel', to: { name: 'Create Travel' } }
     )
   }
 
