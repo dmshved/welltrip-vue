@@ -2,11 +2,16 @@
 import { MoonIcon, SunIcon } from '@heroicons/vue/24/outline/index.js'
 import { useDateTime} from '@/composables/useDateTime.js'
 import { computed } from 'vue'
+import AppUpdateButton from '@/components/AppUpdateButton.vue'
+import { storeToRefs } from 'pinia'
+import { useUserStore } from '@/store/user.js'
+
+const { isEditor } = storeToRefs(useUserStore())
 
 const { formatDate } = useDateTime()
 
-
 const props = defineProps({
+  travelId: String,
   createdAt: String,
   numberOfDays: Number,
   numberOfNights: Number,
@@ -54,6 +59,11 @@ const formattedDate = computed(() => {
       <p class="mt-5 line-clamp-2 text-sm/6 text-gray-600">
         {{ description}}
       </p>
+    </div>
+
+    <!-- Update Button-->
+    <div v-if="isEditor" class="self-end mt-3">
+      <AppUpdateButton :travel-id="travelId"/>
     </div>
   </article>
 </template>

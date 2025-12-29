@@ -5,6 +5,10 @@ import AppPagination from '@/components/AppPagination.vue'
 import UserGreeting from '@/components/UserGreeting.vue'
 import { usePagination } from '@/composables/usePagination'
 import { getTravelsFromApi } from '@/api/travel'
+import AppUpdateButton from '@/components/AppUpdateButton.vue'
+import { storeToRefs } from 'pinia'
+import { useUserStore } from '@/store/user.js'
+const { isEditor } = storeToRefs(useUserStore())
 
 const {
   data: travels,
@@ -37,12 +41,14 @@ const {
         <AppTravelCard
           v-for="travel in travels"
           :key="travel.id"
+          :travel-id="travel.id"
           :title="travel.name"
           :description="travel.description"
           :createdAt="travel.created_at"
           :numberOfDays="travel.number_of_days"
           :numberOfNights="travel.number_of_nights"
-        />
+        >
+        </AppTravelCard>
       </AppCardContainer>
     </div>
   </div>

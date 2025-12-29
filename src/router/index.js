@@ -7,6 +7,7 @@ import ToursView from '@/views/ToursView.vue'
 import DashboardView from '@/views/DashboardView.vue'
 import { useUserStore } from '@/store/user.js'
 import TravelCreate from '@/views/TravelCreate.vue'
+import TravelUpdate from '@/views/TravelUpdate.vue'
 
 const routes = [
   {
@@ -38,6 +39,15 @@ const routes = [
         meta: {
           auth: true,
           roles: ['admin'],
+        },
+      },
+      {
+        name: 'Update Travel',
+        path: 'travels/:id/edit',
+        component: TravelUpdate,
+        meta: {
+          auth: true,
+          roles: ['editor'],
         },
       },
       {
