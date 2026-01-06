@@ -5,8 +5,9 @@ import { computed } from 'vue'
 import AppUpdateButton from '@/components/AppUpdateButton.vue'
 import { storeToRefs } from 'pinia'
 import { useUserStore } from '@/store/user.js'
+import AppCreateTourButton from '@/components/AppCreateTourButton.vue'
 
-const { isEditor } = storeToRefs(useUserStore())
+const { isEditor, isAdmin } = storeToRefs(useUserStore())
 
 const { formatDate } = useDateTime()
 
@@ -61,9 +62,16 @@ const formattedDate = computed(() => {
       </p>
     </div>
 
-    <!-- Update Button-->
-    <div v-if="isEditor" class="self-end mt-3">
-      <AppUpdateButton :travel-id="travelId"/>
+    <div class="flex items-center justify-between gap-3 self-end">
+      <!-- Update Button-->
+      <div v-if="isEditor" class="mt-3" title="Edit Travel">
+        <AppUpdateButton :travel-id="travelId"/>
+      </div>
+
+      <!-- Create Tour Button-->
+      <div v-if="isAdmin" class="mt-3" title="Add Tour for Travel">
+        <AppCreateTourButton :travel-id="travelId"/>
+      </div>
     </div>
   </article>
 </template>
