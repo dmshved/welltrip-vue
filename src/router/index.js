@@ -43,8 +43,14 @@ const routes = [
         },
       },
       {
+        name: 'Tours',
+        path: 'travels/:slug/tours',
+        component: ToursView,
+        meta: { auth: false },
+      },
+      {
         name: 'Create Tour',
-        path: 'travels/:id/tours',
+        path: 'travels/:id/tours/create',
         component: TourCreate,
         meta: {
           auth: true,
@@ -60,12 +66,7 @@ const routes = [
           roles: ['editor'],
         },
       },
-      {
-        name: 'Tours',
-        path: 'tours',
-        component: ToursView,
-        meta: { auth: true },
-      },
+
     ]
   },
   {

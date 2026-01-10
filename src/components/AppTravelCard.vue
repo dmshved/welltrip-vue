@@ -13,6 +13,7 @@ const { formatDate } = useDateTime()
 
 const props = defineProps({
   travelId: String,
+  travelSlug: String,
   createdAt: String,
   numberOfDays: Number,
   numberOfNights: Number,
@@ -72,6 +73,17 @@ const formattedDate = computed(() => {
       <div v-if="isAdmin" class="mt-3" title="Add Tour for Travel">
         <AppCreateTourButton :travel-id="travelId"/>
       </div>
+    </div>
+
+    <!-- Tours -->
+    <div class="bg-gray-800 p-1.5 rounded-lg hover:bg-gray-700 transition-colors duration-200">
+      <RouterLink :to="{
+        name: 'Tours',
+        params: { slug: travelSlug}
+      }"
+      class="text-white">
+        Check available Tours
+      </RouterLink>
     </div>
   </article>
 </template>

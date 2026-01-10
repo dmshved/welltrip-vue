@@ -30,7 +30,6 @@ const navigation = computed(() => {
   // Public routes
   const items = [
     { name: 'Dashboard', to: { name: 'Dashboard' } },
-    { name: 'Tours', to: { name: 'Tours' } },
   ]
 
   // Admin routes
